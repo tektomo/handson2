@@ -4,7 +4,7 @@ import random
 import sys
 import pygame
 
-"""
+
 def select_word():
     word_list = [
         ["apple", "あっぷる"],
@@ -28,6 +28,7 @@ def in_title():
     print("In title")
     i = True
     while i:
+        screen.fill((200, 200, 200))
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
@@ -36,21 +37,32 @@ def in_title():
                     sys.exit()
                 elif event.key == pygame.K_SPACE or event.key == pygame.K_RETURN:
                     i = False
-"""
 
 
 def in_game():
     print("In game")
-    # word = select_word()
+    word = select_word()
+    word_roma = word[0]
+    word_ja = word[1]
+    print(word)
     while True:
         screen.fill((200, 200, 200))
 
-        sf_word = use_font.render("aiueo", True, (0, 0, 255))
+        sf_word = use_font.render(word_roma, True, (0, 0, 0))
         screen.blit(sf_word, (0, 200))
         pygame.display.update()
         for event in pygame.event.get():
+            print(word_roma[0])
             if event.type == pygame.QUIT:
                 sys.exit()
+            if event.type == pygame.KEYDOWN:
+                print(event.key)
+                if chr(event.key) == word_roma[0]:
+                    word_roma = cut_head_char(word_roma)
+                    if is_empty_word(word_roma):
+                        word = select_word()
+                        word_roma = word[0]
+                        word_ja = word[1]
 
 
 num_word = 10
@@ -65,6 +77,6 @@ use_font = pygame.font.SysFont(None, 128)
 
 if __name__ == "__main__":
     while True:
-        # in_title()
+        in_title()
         in_game()
         # in_result()
