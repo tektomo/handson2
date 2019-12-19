@@ -73,7 +73,7 @@ py -3.7 app.py
 ## 1.2 START
 とりあえずHello, worldを表示させてみましょう．  
 ```py
-print(Hello, world)
+print("Hello, world")
 ```
 これを実行すると画面にHello,worldと表示されるはずです．  
 Pythonの参考書とかであればここから文法の説明に入ると思うのですが，今回の目的はゲームを作るという体験を得ることなので，  
@@ -151,3 +151,79 @@ def in_title():
         pygame.display.update() # ディスプレイをアップデートする
 ```
 
+これでタイトル画面ができました．次はキーを押したらゲーム画面に進むようにしていきましょう．  
+まずは次の画面に行くためにキー入力をうけるコマンドを作りましょう．  
+```python
+        # イベントを取得し、特定のキーが押されたときのみ動作を行う
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    sys.exit()
+                elif event.key == pygame.K_SPACE or \
+                        event.key == pygame.K_RETURN:
+                    flag = False
+```
+下にこれを追加してください  
+次に遷移先の画面を作ります．  
+新しくゲーム画面の関数を作っていきましょう．  
+先ほど打った文の下に，次のコードを載せてください．  
+```python
+def in_game():
+    while flag:
+        # 画面を描画する
+        screen.fill((200, 200, 200))
+        pygame.display.update()
+```
+そして，一番下のwhile True:に以下の文を追加してください．
+```python
+in_game()
+```
+今のコードはこうなっているはずです．
+```python
+import random
+import sys
+import time
+import pygame
+
+
+def in_title():
+    print("In title")
+    # 文字列をレンダリングする
+    start_ap = font_en.render("Press Enter or Space to Start", True, (0, 0, 0))
+    end_ap = font_en.render("Press ESC to Quit", True, (0, 0, 0))
+    flag = True
+    while flag:
+        # 画面描画を行う
+        screen.fill((200, 200, 200))
+        screen.blit(start_ap, (0, 0))
+        screen.blit(end_ap, (0, 200))
+        pygame.display.update()
+        # イベントを取得し、特定のキーが押されたときのみ動作を行う
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    sys.exit()
+                elif event.key == pygame.K_SPACE or \
+                        event.key == pygame.K_RETURN:
+                    flag = False
+
+
+def in_game():
+    while flag:
+        # 画面を描画する
+        screen.fill((200, 200, 200))
+        pygame.display.update()
+
+
+screen_size_x = 720 # 画面の大きさのXを指定
+screen_size_y = 480 # 画面の大きさのYを指定
+pygame.init() # Pygameを初期化しますよ〜というコマンド
+screen = pygame.display.set_mode((screen_size_x, screen_size_y)) # 新しいスクリーンを作りますよのコマンド
+while True:
+    in_title()
+    in_game()
+```
