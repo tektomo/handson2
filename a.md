@@ -128,3 +128,19 @@ def in_title():
         pygame.display.update()
 ```
 これを実行してみてください．  
+タイトル画面が表示されると思います．  
+下に説明を書きます．  
+```python
+def in_title():
+    print("In title")
+    # 文字列をレンダリングする
+    start_ap = font_en.render("Press Enter or Space to Start", True, (0, 0, 0)) # "Press Enter ..."の文字をfont_enのフォントでレンダリングして"start_ap"Surfaceオブジェクトを生成する
+    end_ap = font_en.render("Press ESC to Quit", True, (0, 0, 0)) # "Press ESC ..."の文字をfont_enのフォントでレンダリングして"end_ap"Surfaceオブジェクトを生成する
+    flag = True # 続行フラグを立てます
+    while flag: # flag = Trueなので無限ループです
+        # 画面描画を行う
+        screen.fill((200, 200, 200)) # 画面を引数の値の色で塗りつぶす 引数:(R, G, B)
+        screen.blit(start_ap, (0, 0)) # start_apを(x, y)の位置に表示する
+        screen.blit(end_ap, (0, 200)) # end_apを(x, y)の位置に表示する
+        pygame.display.update() # ディスプレイをアップデートする
+```
