@@ -78,3 +78,25 @@ print(Hello, world)
 これを実行すると画面にHello,worldと表示されるはずです．  
 Pythonの参考書とかであればここから文法の説明に入ると思うのですが，今回の目的はゲームを作るという体験を得ることなので，  
 とりあえずこのコマンドを行うとコンソールに何か表示されるんだなぐらいの認識で大丈夫です．  
+  
+ではここから，実際にゲームを作っていきましょう．  
+まずはこれを入力してみてください．  
+```python
+screen_size_x = 720 # 画面の大きさのXを指定
+screen_size_y = 480 # 画面の大きさのYを指定
+pygame.init() # Pygameを初期化しますよ〜というコマンド
+screen = pygame.display.set_mode((screen_size_x, screen_size_y)) # 新しいスクリーンを作りますよのコマンド
+```
+これは，Pygameを初期化してみるというコマンドです．  
+これを実行してみると，画面が一瞬だけ表示されると思います．  
+これでは何がおきているのかわからないので，無限ループを入れてずっと実行し続けてみましょう．
+```python
+screen_size_x = 720 # 画面の大きさのXを指定
+screen_size_y = 480 # 画面の大きさのYを指定
+pygame.init() # Pygameを初期化しますよ〜というコマンド
+screen = pygame.display.set_mode((screen_size_x, screen_size_y)) # 新しいスクリーンを作りますよのコマンド
+while True:
+    print("Windows appear!")
+
+```
+これで，画面がずっと表示されるはずです．
