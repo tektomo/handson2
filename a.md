@@ -100,3 +100,31 @@ while True:
 
 ```
 これで，画面がずっと表示されるはずです．
+そうしたら，まずはタイトル画面を作っていきましょう．
+まず，タイトル画面に出力するための文字のフォントを設定する必要があります．
+先ほどの`screen`変数の下にこれを追加してください．
+```
+font_en_big = pygame.font.SysFont(None, 128)
+font_ja = pygame.font.SysFont('yugothicmediumyugothicuiregular', 128)
+font_en = pygame.font.SysFont(None, 64)
+```
+また先ほどのwhile True:の中身を消して，新しくこの一行を追加してください．
+```python
+def in_title()
+```
+これでは未定義エラーが出てしまうので，これらの上に関数を定義しましょう．
+```python
+def in_title():
+    print("In title")
+    # 文字列をレンダリングする
+    start_ap = font_en.render("Press Enter or Space to Start", True, (0, 0, 0))
+    end_ap = font_en.render("Press ESC to Quit", True, (0, 0, 0))
+    flag = True
+    while flag:
+        # 画面描画を行う
+        screen.fill((200, 200, 200))
+        screen.blit(start_ap, (0, 0))
+        screen.blit(end_ap, (0, 200))
+        pygame.display.update()
+```
+これを実行してみてください．  
