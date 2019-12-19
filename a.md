@@ -82,6 +82,12 @@ Pythonの参考書とかであればここから文法の説明に入ると思�
 ではここから，実際にゲームを作っていきましょう．  
 まずはこれを入力してみてください．  
 ```python
+import random
+import sys
+import time
+import pygame
+
+
 screen_size_x = 720 # 画面の大きさのXを指定
 screen_size_y = 480 # 画面の大きさのYを指定
 pygame.init() # Pygameを初期化しますよ〜というコマンド
@@ -144,3 +150,4 @@ def in_title():
         screen.blit(end_ap, (0, 200)) # end_apを(x, y)の位置に表示する
         pygame.display.update() # ディスプレイをアップデートする
 ```
+
