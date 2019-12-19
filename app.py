@@ -86,7 +86,7 @@ def in_game():
         screen.blit(word_ja_ap, (0, 0))
         screen.blit(word_roma_ap, (0, 200))
         pygame.display.update()
-        # イベントを取得し、正しいキーが押されていれば戦闘文字をカット、もう文字がない（=完答した）ときは新しい文字列を探す（ただし回数制限で終了）
+        # イベントを取得し、正しいキーが押されていれば先頭文字をカット、もう文字がない（=完答した）ときは新しい文字列を探す（ただし回数制限で終了）
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
@@ -127,16 +127,16 @@ def in_result(point):
                     flag = False
 
 
-if __name__ == "__main__":
-    num_word = 10
-    screen_size_x = 720
-    screen_size_y = 480
-    pygame.init()
-    screen = pygame.display.set_mode((screen_size_x, screen_size_y))
-    font_en_big = pygame.font.SysFont(None, 128)
-    font_ja = pygame.font.SysFont('hgｺﾞｼｯｸehgpｺﾞｼｯｸehgsｺﾞｼｯｸe', 128)
-    font_en = pygame.font.SysFont(None, 64)
-    while True:
-        in_title()
-        point = in_game()
-        in_result(point)
+
+num_word = 10
+screen_size_x = 720
+screen_size_y = 480
+pygame.init()
+screen = pygame.display.set_mode((screen_size_x, screen_size_y))
+font_en_big = pygame.font.SysFont(None, 128)
+font_ja = pygame.font.SysFont('hgｺﾞｼｯｸehgpｺﾞｼｯｸehgsｺﾞｼｯｸe', 128)
+font_en = pygame.font.SysFont(None, 64)
+while True:
+    in_title()
+    point = in_game()
+    in_result(point)
