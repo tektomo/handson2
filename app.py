@@ -134,7 +134,7 @@ screen_size_y = 480
 pygame.init()
 screen = pygame.display.set_mode((screen_size_x, screen_size_y))
 font_en_big = pygame.font.SysFont(None, 128)
-font_ja = pygame.font.SysFont('hgｺﾞｼｯｸehgpｺﾞｼｯｸehgsｺﾞｼｯｸe', 128)
+font_ja = pygame.font.SysFont('yugothic', 128)
 font_en = pygame.font.SysFont(None, 64)
 while True:
     in_title()
