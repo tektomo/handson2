@@ -180,56 +180,7 @@ def in_game():
 ```python
 in_game()
 ```
-今のコードはこうなっているはずです．
-```python
-import random
-import sys
-import time
-import pygame
-
-
-def in_title():
-    print("In title")
-    # 文字列をレンダリングする
-    start_ap = font_en.render("Press Enter or Space to Start", True, (0, 0, 0))
-    end_ap = font_en.render("Press ESC to Quit", True, (0, 0, 0))
-    flag = True
-    while flag:
-        # 画面描画を行う
-        screen.fill((200, 200, 200))
-        screen.blit(start_ap, (0, 0))
-        screen.blit(end_ap, (0, 200))
-        pygame.display.update()
-        # イベントを取得し、特定のキーが押されたときのみ動作を行う
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                sys.exit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_ESCAPE:
-                    sys.exit()
-                elif event.key == pygame.K_SPACE or \
-                        event.key == pygame.K_RETURN:
-                    flag = False
-
-
-def in_game():
-    flag = True
-    while flag:
-        # 画面を描画する
-        screen.fill((200, 200, 200))
-        pygame.display.update()
-
-
-screen_size_x = 720 # 画面の大きさのXを指定
-screen_size_y = 480 # 画面の大きさのYを指定
-pygame.init() # Pygameを初期化しますよ〜というコマンド
-screen = pygame.display.set_mode((screen_size_x, screen_size_y)) # 新しいスクリーンを作りますよのコマンド
-while True:
-    in_title()
-    in_game()
-```
-
-下に説明を書きます．
+今のコードはこうなっているはずです．説明付きでコードを貼ります．
 ```py
 # ライブラリをインポート
 import random
@@ -273,7 +224,136 @@ screen_size_x = 720 # 画面の大きさのXを指定
 screen_size_y = 480 # 画面の大きさのYを指定
 pygame.init() # Pygameを初期化しますよ〜というコマンド
 screen = pygame.display.set_mode((screen_size_x, screen_size_y)) # 新しいスクリーンを作りますよのコマンド
+# フォントの設定
+font_en_big = pygame.font.SysFont(None, 128)
+font_ja = pygame.font.SysFont('yugothicmediumyugothicuiregular', 128)
+font_en = pygame.font.SysFont(None, 64)
 while True: # 無限ループ
     in_title() # in_title関数を実行
     in_game() # in_game関数を実行
+```
+
+これで，とりあえずタイトル画面とゲーム画面が出せるようになりました．  
+ここから一気に関数を追加して，実際にゲームが作れるところまで進めます．  
+以下のようなコードになるように入力してください．  
+
+```py
+import random
+import sys
+import time
+import pygame
+
+
+def select_word(): # 問題となる単語を選択する関数
+    word_list = [
+        ["ringo", "りんご"],
+        ["banana", "ばなな"],
+        ["budou", "ぶどう"],
+        ["kaki", "かき"],
+        ["mikan", "みかん"],
+        ["neko", "ねこ"],
+        ["inu", "いぬ"],
+        ["uma", "うま"],
+        ["saru", "さる"],
+        ["tori", "とり"]
+    ]
+    # ワードをランダムで抽出し、抽出したワードは最後尾になる
+    i = random.randint(0, len(word_list)-1) # ランダムに選ぶ
+    selected_word = word_list.pop(i) # 選んだリストを抽出し削除
+    word_list.append(selected_word) # 先ほど消したリストを一番後ろに挿入
+    # 選んだワードのリストを返す
+    return selected_word
+
+
+def cut_head_char(word):
+    # 先頭をカットした引数を返す
+    return word[1:]
+
+
+def is_empty_word(word):
+    # WordがNoneならTrueを、そうでないのならFalseを返す
+    return not word
+
+
+def in_title():
+    print("In title")
+    # 文字列をレンダリングする
+    start_ap = font_en.render("Press Enter or Space to Start", True, (0, 0, 0)) # "Press Enter ..."の文字をfont_enのフォントでレンダリングして"start_ap"Surfaceオブジェクトを生成する
+    end_ap = font_en.render("Press ESC to Quit", True, (0, 0, 0)) # "Press ESC ..."の文字をfont_enのフォントでレンダリングして"end_ap"Surfaceオブジェクトを生成する
+    flag = True # 続行フラグを立てます
+    while flag: # flag = Trueなので無限ループです
+        # 画面描画を行う
+        screen.fill((200, 200, 200)) # 画面を引数の値の色で塗りつぶす 引数:(R, G, B)
+        screen.blit(start_ap, (0, 0)) # start_apを(x, y)の位置に表示する
+        screen.blit(end_ap, (0, 200)) # end_apを(x, y)の位置に表示する
+        pygame.display.update() # ディスプレイをアップデートする
+        # イベントを取得し、特定のキーが押されたときのみ動作を行う
+        for event in pygame.event.get(): # 起きたイベントを全て取得
+            if event.type == pygame.QUIT: # もしQUITイベントがおこったら終了
+                sys.exit()
+            if event.type == pygame.KEYDOWN: # もしキーが押されたら
+                if event.key == pygame.K_ESCAPE: # もしESCキーが押されたら終了
+                    sys.exit()
+                elif event.key == pygame.K_SPACE or \
+                        event.key == pygame.K_RETURN: # もしSpaceキーかEnterキーが押されたらタイトル画面を終了（無限ループを抜ける）
+                    flag = False
+
+
+def in_game():
+    flag = True # フラグ
+    count = 1 # 問題数
+    score = 0 # 得点
+    mistake = 0 # ミス数
+    print("In game")
+    # 最初のワードをとってきて、それをそれぞれ変数に代入
+    word = select_word()
+    word_roma = word[0]
+    word_ja = word[1]
+    # 3秒前のカウントダウンを表示
+    for i in range(3):
+        screen.fill((200, 200, 200)) # 画面を引数の値の色で塗りつぶす 引数:(R, G, B)
+        now_ap = font_en.render(str(3-i), True, (0, 0, 0)) # 今の秒数をレンダリング
+        screen.blit(now_ap, (0, 200)) # now_apを表示
+        pygame.display.update() # ディスプレイをアップデート
+        time.sleep(0.9) # 0.9秒間まつ
+    while flag:
+        # 画面を描画する
+        screen.fill((200, 200, 200))　# 画面を引数の値の色で塗りつぶす 引数:(R, G, B)
+        word_ja_ap = font_ja.render(word_ja, True, (0, 0, 0)) # 問題の日本語をレンダリング
+        word_roma_ap = font_en_big.render(word_roma, True, (0, 0, 0))　# 問題の英語をレンダリング
+        screen.blit(word_ja_ap, (0, 0)) # 問題の日本語を表示
+        screen.blit(word_roma_ap, (0, 200)) # 問題の英語を表示
+        pygame.display.update()
+        # イベントを取得し、正しいキーが押されていれば先頭文字をカット、もう文字がない（=完答した）ときは新しい文字列を探す（ただし回数制限で終了）
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if chr(event.key) == word_roma[0]:
+                    score += 1
+                    word_roma = cut_head_char(word_roma)
+                    if is_empty_word(word_roma):
+                        count += 1
+                        if count > num_word:
+                            flag = False # 問題数が制限に達したら終了
+                        word = select_word()
+                        word_roma = word[0]
+                        word_ja = word[1]
+                else:
+                    mistake += 1
+    return [score, mistake] # スコアとミスを返す
+
+
+num_word = 10
+screen_size_x = 720 # 画面の大きさのXを指定
+screen_size_y = 480 # 画面の大きさのYを指定
+pygame.init() # Pygameを初期化しますよ〜というコマンド
+screen = pygame.display.set_mode((screen_size_x, screen_size_y)) # 新しいスクリーンを作りますよのコマンド
+# フォントの設定
+font_en_big = pygame.font.SysFont(None, 128)
+font_ja = pygame.font.SysFont('yugothicmediumyugothicuiregular', 128)
+font_en = pygame.font.SysFont(None, 64)
+while True: # 無限ループ
+    in_title() # in_title関数を実行
+    point = in_game() # in_game関数を実行
 ```
