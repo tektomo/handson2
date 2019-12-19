@@ -116,9 +116,9 @@ font_en = pygame.font.SysFont(None, 64)
 ```
 また先ほどのwhile True:の中身を消して，新しくこの一行を追加してください．
 ```python
-def in_title()
+in_title()
 ```
-これでは未定義エラーが出てしまうので，これらの上に関数を定義しましょう．
+これでは未定義エラーが出てしまうので，この`while True`の上に関数を定義しましょう．
 ```python
 def in_title():
     print("In title")
@@ -213,6 +213,7 @@ def in_title():
 
 
 def in_game():
+    flag = True
     while flag:
         # 画面を描画する
         screen.fill((200, 200, 200))
@@ -226,4 +227,53 @@ screen = pygame.display.set_mode((screen_size_x, screen_size_y)) # 新しいス�
 while True:
     in_title()
     in_game()
+```
+
+下に説明を書きます．
+```py
+# ライブラリをインポート
+import random
+import sys
+import time
+import pygame
+
+
+def in_title():
+    print("In title")
+    # 文字列をレンダリングする
+    start_ap = font_en.render("Press Enter or Space to Start", True, (0, 0, 0)) # "Press Enter ..."の文字をfont_enのフォントでレンダリングして"start_ap"Surfaceオブジェクトを生成する
+    end_ap = font_en.render("Press ESC to Quit", True, (0, 0, 0)) # "Press ESC ..."の文字をfont_enのフォントでレンダリングして"end_ap"Surfaceオブジェクトを生成する
+    flag = True # 続行フラグを立てます
+    while flag: # flag = Trueなので無限ループです
+        # 画面描画を行う
+        screen.fill((200, 200, 200)) # 画面を引数の値の色で塗りつぶす 引数:(R, G, B)
+        screen.blit(start_ap, (0, 0)) # start_apを(x, y)の位置に表示する
+        screen.blit(end_ap, (0, 200)) # end_apを(x, y)の位置に表示する
+        pygame.display.update() # ディスプレイをアップデートする
+        # イベントを取得し、特定のキーが押されたときのみ動作を行う
+        for event in pygame.event.get(): # 起きたイベントを全て取得
+            if event.type == pygame.QUIT: # もしQUITイベントがおこったら終了
+                sys.exit()
+            if event.type == pygame.KEYDOWN: # もしキーが押されたら
+                if event.key == pygame.K_ESCAPE: # もしESCキーが押されたら終了
+                    sys.exit()
+                elif event.key == pygame.K_SPACE or \
+                        event.key == pygame.K_RETURN: # もしSpaceキーかEnterキーが押されたらタイトル画面を終了（無限ループを抜ける）
+                    flag = False
+
+
+def in_game():
+    while flag:
+        # 画面を描画する
+        screen.fill((200, 200, 200)) # スクリーンを(R,G,B)色で塗り潰し
+        pygame.display.update() # スクリーンをアップロード
+
+
+screen_size_x = 720 # 画面の大きさのXを指定
+screen_size_y = 480 # 画面の大きさのYを指定
+pygame.init() # Pygameを初期化しますよ〜というコマンド
+screen = pygame.display.set_mode((screen_size_x, screen_size_y)) # 新しいスクリーンを作りますよのコマンド
+while True: # 無限ループ
+    in_title() # in_title関数を実行
+    in_game() # in_game関数を実行
 ```
