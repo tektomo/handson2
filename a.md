@@ -71,16 +71,16 @@ py -3.7 app.py
 今回はこれを作っていって、余裕があれば拡張していくことにします。*Done is better than perfect.*  
 
 ## 1.2 START
-とりあえずHello, worldを表示させてみましょう．  
+とりあえずHello, worldを表示させてみましょう。  
 ```py
 print("Hello, world")
 ```
-これを実行すると画面にHello,worldと表示されるはずです．  
-Pythonの参考書とかであればここから文法の説明に入ると思うのですが，今回の目的はゲームを作るという体験を得ることなので，  
-とりあえずこのコマンドを行うとコンソールに何か表示されるんだなぐらいの認識で大丈夫です．  
+これを実行すると画面にHello,worldと表示されるはずです。  
+Pythonの参考書とかであればここから文法の説明に入ると思うのですが、今回の目的はゲームを作るという体験を得ることなので、  
+とりあえずこのコマンドを行うとコンソールに何か表示されるんだなぐらいの認識で大丈夫です。  
   
-ではここから，実際にゲームを作っていきましょう．  
-まずはこれを入力してみてください．  
+ではここから、実際にゲームを作っていきましょう。  
+まずはこれを入力してみてください。  
 ```python
 import random
 import sys
@@ -93,9 +93,9 @@ screen_size_y = 480 # 画面の大きさのYを指定
 pygame.init() # Pygameを初期化しますよ〜というコマンド
 screen = pygame.display.set_mode((screen_size_x, screen_size_y)) # 新しいスクリーンを作りますよのコマンド
 ```
-これは，Pygameを初期化してみるというコマンドです．  
-これを実行してみると，画面が一瞬だけ表示されると思います．  
-これでは何がおきているのかわからないので，無限ループを入れてずっと実行し続けてみましょう．
+これは、Pygameを初期化してみるというコマンドです。  
+これを実行してみると、画面が一瞬だけ表示されると思います。  
+これでは何がおきているのかわからないので、無限ループを入れてずっと実行し続けてみましょう。
 ```python
 screen_size_x = 720 # 画面の大きさのXを指定
 screen_size_y = 480 # 画面の大きさのYを指定
@@ -105,20 +105,20 @@ while True:
     print("Windows appear!")
 
 ```
-これで，画面がずっと表示されるはずです．
-そうしたら，まずはタイトル画面を作っていきましょう．
-まず，タイトル画面に出力するための文字のフォントを設定する必要があります．
-先ほどの`screen`変数の下にこれを追加してください．
+これで、画面がずっと表示されるはずです。
+そうしたら、まずはタイトル画面を作っていきましょう。
+まず、タイトル画面に出力するための文字のフォントを設定する必要があります。
+先ほどの`screen`変数の下にこれを追加してください。
 ```
 font_en_big = pygame.font.SysFont(None, 128)
 font_ja = pygame.font.SysFont('yugothicmediumyugothicuiregular', 128)
 font_en = pygame.font.SysFont(None, 64)
 ```
-また先ほどのwhile True:の中身を消して，新しくこの一行を追加してください．
+また先ほどのwhile True:の中身を消して、新しくこの一行を追加してください。
 ```python
 in_title()
 ```
-これでは未定義エラーが出てしまうので，この`while True`の上に関数を定義しましょう．
+これでは未定義エラーが出てしまうので、この`while True`の上に関数を定義しましょう。
 ```python
 def in_title():
     print("In title")
@@ -133,9 +133,9 @@ def in_title():
         screen.blit(end_ap, (0, 200))
         pygame.display.update()
 ```
-これを実行してみてください．  
-タイトル画面が表示されると思います．  
-下に説明を書きます．  
+これを実行してみてください。  
+タイトル画面が表示されると思います。  
+下に説明を書きます。  
 ```python
 def in_title():
     print("In title")
@@ -151,8 +151,8 @@ def in_title():
         pygame.display.update() # ディスプレイをアップデートする
 ```
 
-これでタイトル画面ができました．次はキーを押したらゲーム画面に進むようにしていきましょう．  
-まずは次の画面に行くためにキー入力をうけるコマンドを作りましょう．  
+これでタイトル画面ができました。次はキーを押したらゲーム画面に進むようにしていきましょう。  
+まずは次の画面に行くためにキー入力をうけるコマンドを作りましょう。  
 ```python
         # イベントを取得し、特定のキーが押されたときのみ動作を行う
         for event in pygame.event.get():
@@ -166,9 +166,9 @@ def in_title():
                     flag = False
 ```
 下にこれを追加してください  
-次に遷移先の画面を作ります．  
-新しくゲーム画面の関数を作っていきましょう．  
-先ほど打った文の下に，次のコードを載せてください．  
+次に遷移先の画面を作ります。  
+新しくゲーム画面の関数を作っていきましょう。  
+先ほど打った文の下に、次のコードを載せてください。  
 ```python
 def in_game():
     while flag:
@@ -176,11 +176,11 @@ def in_game():
         screen.fill((200, 200, 200))
         pygame.display.update()
 ```
-そして，一番下のwhile True:に以下の文を追加してください．
+そして、一番下のwhile True:に以下の文を追加してください。
 ```python
 in_game()
 ```
-今のコードはこうなっているはずです．説明付きでコードを貼ります．
+今のコードはこうなっているはずです。説明付きでコードを貼ります。
 ```py
 # ライブラリをインポート
 import random
@@ -233,9 +233,9 @@ while True: # 無限ループ
     in_game() # in_game関数を実行
 ```
 
-これで，とりあえずタイトル画面とゲーム画面が出せるようになりました．  
-ここから一気に関数を追加して，実際にゲームが作れるところまで進めます．  
-以下のようなコードになるように入力してください．  
+これで、とりあえずタイトル画面とゲーム画面が出せるようになりました。  
+ここから一気に関数を追加して、実際にゲームが作れるところまで進めます。  
+以下のようなコードになるように入力してください。  
 
 ```py
 import random
@@ -357,3 +357,38 @@ while True: # 無限ループ
     in_title() # in_title関数を実行
     point = in_game() # in_game関数を実行
 ```
+
+最後に、result画面を追加しましょう。  
+`num_word = ...`の上に新しく以下を追加してください  
+```py
+def in_result(point):
+    print("In result")
+    score = point[0]
+    mistake = point[1]
+    score_ap = font_en.render("Your score is "+str(score), True, (0, 0, 0))
+    mistake_ap = font_en.render("Your mistakes are "+str(mistake),
+                                True, (0, 0, 0))
+    flag = True
+    while flag:
+        screen.fill((200, 200, 200))
+        screen.blit(score_ap, (0, 0))
+        screen.blit(mistake_ap, (0, 200))
+        pygame.display.update()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_SPACE or event.key == pygame.K_RETURN:
+                    flag = False
+```
+また、`score = in_game()`の下に以下を追加してください
+```py
+in_result(point) # in_result()関数を実行
+```
+これで、完成しています。  
+この状態で，サンプルのapp.pyと比べてみて，同じならば完成です．
+
+では、ここまでのファイルをGitHubに上げてみましょう。  
+GitHub Desktopで，File->Create a new repositoryを選択してください．  
+NameとDiscriptionにタイトル，説明をそれぞれ入れ，Local pathに先ほどまで作業していたフォルダを選択してください．  
+そのほかは何もせず，Create Repositoryを押すと，リポジトリが作成されます．
